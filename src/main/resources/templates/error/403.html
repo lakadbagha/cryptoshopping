@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{asset/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{asset/css/main.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<link rel="stylesheet" th:href="@{/css/font-awesome.mini.css}">
+<script th:src="@{/asset/js/jquery-3.1.1.min.js}"></script>
+<script th:src="@{/asset/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/asset/js/main.js}"></script>
+<script th:src="@{/js/all.js}"></script>
+</head>
+<body>
+
+<div th:replace="@{/webTemplate/header} :: header"></div>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>403 - Access is denied</h1>
+        <div th:inline="text">Hello '[[${#httpServletRequest.remoteUser}]]', 
+                you do not have permission to access this page.</div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<div th:replace="webTemplate/footer :: footer"></div>
+
+</body>
+</html>

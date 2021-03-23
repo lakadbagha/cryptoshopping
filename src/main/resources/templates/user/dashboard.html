@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DASHBOARD</title>
+<link rel="stylesheet" th:href="@{/asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+<script th:src="@{/js/jquery.js}"></script>
+<script defer th:src="@{/js/all.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+<style type="text/css">
+body, html {
+	height: 100%;
+}
+</style>
+</head>
+
+<body>
+<div id="load"></div>
+<div id="contents">
+	<div th:replace="@{/webTemplate/header} :: header"></div>
+
+	<div class="container-fluid h-100">
+		<div class="row h-100">
+			<aside class="col-12 col-md-2 p-0 bg-dark">
+				<nav
+					class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2">
+					<div class="collapse navbar-collapse">
+						<ul
+							class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+
+							<li class="nav-item active"><a class="nav-link pl-0"
+								href="#"><i class="fas fa-home fa-2x"></i> <span
+									class="d-none d-md-inline">HOME</span></a></li>
+							<li class="nav-item"><a class="nav-link pl-0"
+								href="/user/getCart"><i class="fas fa-shopping-cart fa-2x"></i>
+									<span class="d-none d-md-inline">CART</span> <span
+									class="badge badge-info" th:text="${cartCount}" id="cartInfo"></span></a></li>
+							<li class="nav-item"><a class="nav-link pl-0" href="/user/showOrderHistory"><i
+									class="fa fa-book fa-fw fa-2x"></i> <span
+									class="d-none d-md-inline">ORDER</span></a></li>
+							<li class="nav-item"><a class="nav-link pl-0" href="/user/userSetting"><i
+									class="fas fa-cog fa-2x"></i> <span class="d-none d-md-inline">SETTING</span></a>
+							</li>
+							<li class="nav-item"><a class="nav-link pl-0" href="#"><i class="fas fa-question fa-2x"></i> <span
+									class="d-none d-md-inline">SUPPORT</span></a></li>
+						</ul>
+					</div>
+				</nav>
+			</aside>
+			<div class="col bg-faded py-3">
+				<div class="alert alert-dismissible alert-primary">
+					<strong>Bitcoin Value:</strong> <label th:text="${bitcoinValue}"
+						id="bitcoinValue">Bitcoin Rate</label> INR
+
+				</div>
+				<div class="h-50" id="home">
+					<div class="row align-items-center h-100">
+						<div class="jumbotron col-xl mx-auto" id="containerBody">
+							<div id="addCartDiv">
+								<div class="text-center">
+									<img src="/asset/img/shopviacrypto.png" width="100%"
+										height="100%" style="max-width: 300px;">
+								</div>
+								
+								<br>
+								<form id="userAddCartForm1">
+
+									<div class="input-group">
+										<input class="form-control" type="text"
+											placeholder="Paste here URL" id="productURLId" required
+											autofocus>
+
+										<div class="input-group-append">
+											<input class="btn btn-secondary" type="submit" value="Go!">
+										</div>
+
+									</div>
+
+								</form><br>
+								<div id="addCartPanel">
+									<h3>Details</h3>
+									<br>
+									<div class="float-left">
+										<form id="userAddCartForm2" class="form-inline">
+
+											<div class="form-group">
+												<label class=" mr-2" for="price"><strong>Price</strong></label>
+												<input class="form-control mr-2" id="price"
+													placeholder="Price" type="text"><label
+													class=" mr-2" for="currency">INR(Indian Ruppee)</label>
+											</div>
+											<div class="form-group">
+												<label class="mr-2" for="quantity"><strong>Quantity</strong></label>
+												<input class="form-control mr-2" id="quantity"
+													placeholder="Quantity" type="text">
+											</div>
+											<div class="form-group">
+											<input class="btn btn-primary" type="submit" value="Add Cart">
+											<input class="btn btn-secondary" type="button" value="Cancel"
+												id="cancel">
+												</div>
+										</form>
+										<br>
+									</div>
+
+									<div class="float-right">
+										<strong> Total: <label id="totalPrice">0 btc</label>
+										</strong>
+									</div>
+								</div>
+									<div class="alert alert-dismissible alert-success"
+										id="successMessage">
+										<button type="button" class="close" data-dismiss="alert">&times;</button>
+										<strong>Well done!</strong> You successfully Added in your <a
+											href="/user/getCart" class="alert-link eCart">Cart</a>.
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+	<!--scripts loaded here-->
+
+
+
+
+
+	<script th:src="@{/js/userDashBoard.js}"></script>
+<script th:src="@{/js/loading.js}"></script>
+
+
+</body>
+</html>

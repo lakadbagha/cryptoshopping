@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignUp</title>
+<link rel="stylesheet" th:href="@{asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<script th:src="@{js/jquery.js}"></script>
+<script th:src="@{asset/js/bootstrap.min.js}"></script>
+<body class="bg-primary">
+<div id="load"></div>
+	<div id="contents">
+	<div th:replace="@{/webTemplate/header} :: header"></div>
+
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-10 mx-auto">
+				<div class="example-block">
+
+					<div class="jumbotron">
+						<h3 class="text-center mb-4">Sign-up</h3>
+						<form class="form-signin" action="#" th:action="@{/signup}"
+							method="post" th:object="${account}">
+							<fieldset>
+								<div class="form-group">
+									<input type="text" th:field="*{firstName}"
+										class="form-control input-sm" placeholder="First Name*"
+										required="required">
+									<div class="text text-danger"
+										th:if="${#fields.hasErrors('firstName')}"
+										th:errors="*{firstname}"></div>
+								</div>
+
+								<div class="form-group">
+									<input type="text" th:field="*{lastName}"
+										class="form-control input-sm" placeholder="Last Name">
+								</div>
+								<div class="form-group">
+									<input type="email" th:field="*{email}"
+										class="form-control input-sm" placeholder="Email Address*"
+										required="required">
+									<div class="text text-danger"
+										th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+								</div>
+								<div class="form-group">
+									<input type="password" th:field="*{password}"
+										class="form-control input-sm" placeholder="Password*"
+										required="required">
+									<div class="text text-danger"
+										th:if="${#fields.hasErrors('password')}"
+										th:errors="*{password}"></div>
+								</div>
+
+								<input class="btn btn-lg btn-primary btn-block"
+									value="Sign Me Up" type="submit">
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<br>
+<script type="text/javascript">
+document.onreadystatechange = function () {
+	  var state = document.readyState
+	  if (state == 'interactive') {
+		  $('#contents').hide();
+	       
+	  } else if (state == 'complete') {
+	      setTimeout(function(){
+	         document.getElementById('interactive');
+	         $('#load').hide();
+	         $('#contents').show();
+	      },1000);
+	  }
+	}
+</script>	
+</body>
+
+</html>

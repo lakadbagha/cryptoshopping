@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Info</title>
+<link rel="stylesheet" th:href="@{/asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+<script th:src="@{/js/jquery.js}"></script>
+<script defer th:src="@{/js/all.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+<style type="text/css">
+body, html {
+	height: 100%;
+}
+</style>
+</head>
+
+<body>
+	<div id="load"></div>
+	<div id="contents">
+		<div th:replace="@{/webTemplate/header} :: header"></div>
+		<div class="container-fluid h-100">
+			<div class="alert alert-dismissible alert-primary">
+				<strong>Bitcoin Value:</strong> <label th:text="${bitcoinValue}"
+					id="bitcoinValue">Bitcoin Rate</label> INR
+			</div>
+			<div class="jumbotron">
+				<div class="row">
+					<div class="mx-auto">
+						<p class="lead">Your order is almost complete. Send your
+							Invoice Due on below Address</p>
+						<div class="mx-auto">
+							<label class="mb-2 mr-sm-2 mb-sm-0">Transaction ID :</label>#<label
+								th:text="${transaction.transactionId}"></label><br> <img
+								id="qrCode"
+								th:src="@{https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=qr(qr=${transaction.receiveTransactionId})}">
+						</div>
+						<hr>
+						<div class="form-group">
+							<div class="input-group">
+								<h3 class="mb-2 mr-sm-2 mb-sm-0">Address</h3>
+								<input class="form-control" type="text" readonly="readonly"
+									th:value="${transaction.currencyRecevingAddress}"
+									id="transactionAddress">
+								<div class="input-group-append">
+									<button class="btn btn-primary"
+										onclick="copyToClipboard('#transactionAddress')">Copy</button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<h3 class="mb-2 mr-sm-2 mb-sm-0">Amount</h3>
+								<input class="form-control" type="text" readonly="readonly"
+									th:value="${transaction.amountDue}" id="transactionAmount">
+								<div class="input-group-append">
+									<button class="btn btn-primary"
+										onclick="copyToClipboard('#transactionAmount')">Copy</button>
+								</div>
+
+							</div>
+						</div>
+						<button type="button" class="btn btn-outline-success btn-lg" id="paid">
+							<i class="fab fa-bitcoin"></i> I have paid
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="dialogBox">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">TRANSACTION</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Thank you for purchasing from us. We will update your order
+							shortly. Have a nice Day!</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="home" class="btn btn-primary">Return
+							to home</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$("#paid").click(function(e) {
+				e.preventDefault();
+				$("#dialogBox").modal();
+			});
+			$("#home").click(function(e) {
+				e.preventDefault();
+				window.location = "/user/dashboard";
+			});
+		})
+	</script><script th:src="@{/js/loading.js}"></script>
+</body>
+</html>

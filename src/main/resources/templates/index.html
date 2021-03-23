@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>home</title>
+<link rel="stylesheet" th:href="@{/asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+	<div id="load"></div>
+	<div id="contents">
+		<div th:replace="@{/webTemplate/header} :: header"></div>
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<h1>
+						<strong>Welcome to ShopViaCrypto.com</strong>
+					</h1>
+					<p>
+						Shop anything in Bitcoin from Any Online <strong>Shopping
+							Website.</strong> In India.
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<div class="example-block">
+						<div class="hidden-xs" id="homeShoppingCart"></div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="jumbotron">
+
+						<form class="form-signin" action="#" th:action="@{/login}"
+							method="post">
+							<div th:if="${param.error}" class="alert alert-error">
+								Invalid username and password.</div>
+							<div th:if="${param.logout}" class="alert alert-success">
+								You have been logged out.</div>
+
+							<div class="form-group row has-warning">
+								<div class="col-sm-10">
+									<input class="form-control" type="email" required
+										name="username" placeholder="Email address" autofocus>
+								</div>
+							</div>
+							<div class="form-group row has-danger">
+								<div class="col-sm-10">
+									<input class="form-control" type="password" required
+										name="password" placeholder="Password">
+								</div>
+							</div>
+
+							<button class="btn btn-primary" type="submit">Sign-in</button>
+
+						</form>
+						<br>
+						<div class="col-sm-10">
+							<a href="#" class="forgot-password">Forget password?</a>
+						</div>
+						<div class="col-sm-10">
+							<a th:href="@{/signup}" class="forgot-password">New User?
+								SignUp</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<br>
+		<div th:insert="webTemplate/footer :: footer"></div>
+	</div>
+	<script>
+		document.onreadystatechange = function() {
+			var state = document.readyState
+			if (state == 'interactive') {
+				$('#contents').hide();
+
+			} else if (state == 'complete') {
+				setTimeout(function() {
+					document.getElementById('interactive');
+					$('#load').hide();
+					$('#contents').show();
+				}, 1000);
+			}
+		}
+	</script>
+</body>
+
+</html>

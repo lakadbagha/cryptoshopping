@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart Info</title>
+<link rel="stylesheet" th:href="@{/asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+<script th:src="@{/js/jquery.js}"></script>
+<script defer th:src="@{/js/all.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+<style type="text/css">
+body, html {
+	height: 100%;
+}
+</style>
+</head>
+
+<body>
+	<div id="load"></div>
+	<div id="contents">
+		<div th:replace="@{/webTemplate/header} :: header"></div>
+		<div class="container-fluid h-100">
+			<div class="alert alert-dismissible alert-primary">
+				<strong>Bitcoin Value:</strong> <label th:text="${bitcoinValue}"
+					id="bitcoinValue">Bitcoin Rate</label> INR
+
+			</div>
+			<div class="jumbotron">
+				<div class="row">
+					<div class="col-sm-12">
+
+
+						<table id="cart" class="table table-hover table-condensed">
+							<thead>
+								<tr>
+									<th style="width: 50%">Product</th>
+									<th style="width: 10%">Price</th>
+									<th style="width: 8%">Quantity</th>
+									<th style="width: 22%" class="text-center">Subtotal</th>
+									<th style="width: 10%"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="cart : ${carts}">
+									<tr>
+										<td data-th="Product">
+											<div class="row">
+												<div class="col-sm-2 hidden-xs">
+													<img th:src="@{/asset/img/bagBlue.png}" alt="Cart"
+														class="img-responsive" />
+												</div>
+												<div class="col-sm-10">
+													<p th:text="${cart.productURL}"></p>
+												</div>
+											</div>
+										</td>
+										<td data-th="Price"><label th:text="${cart.price}"></label>
+											INR</td>
+										<td data-th="Quantity"><label th:text="${cart.quantity}"></label>
+										</td>
+										<td data-th="Subtotal" class="text-center"><label
+											th:text="${cart.quantity*cart.price}" class="itemCart"></label>
+											INR</td>
+										<td class="actions" data-th=""><a
+											th:href="@{/getCart/{cart.cartId}(cart.cartId=${cart.cartId})}"
+											class="btn btn-outline-success btn-sm editBtn"><i
+												class="fas fa-edit"></i></a> <a
+											th:href="@{/deleteCart/{cart.cartId}(cart.cartId=${cart.cartId})}"
+											class="btn btn-outline-danger btn-sm delBtn"><i
+												class="fas fa-trash-alt"></i></a></td>
+									</tr>
+								</th:block>
+							</tbody>
+							<tfoot>
+								<tr class="visible-xs">
+									<td class="text-center"><strong>Total <label
+											id="netTotal"></label> INR
+									</strong></td>
+								</tr>
+								<tr>
+								<td><a href="/user/dashboard" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+									<td colspan="1" class="hidden-xs"></td>
+									<td colspan="2" class="hidden-xs text-center"><strong>GrandTotal
+											<label id="grandTotal"></label> btc
+									</strong></td>
+									<td><a href="/user/getAddress"
+										class="btn btn-success btn-block">Proceed <i
+											class="fa fa-angle-right"></i></a></td>
+								</tr>
+							</tfoot>
+						</table>
+
+
+						<div class="my-model-form">
+							<form id="updateMyCart">
+								<div class="modal fade" id="editModal" tabindex="-1"
+									role="dialog" aria-labelledby="editModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<img th:src="@{/asset/img/bagBlue.png}">
+												<h5 class="modal-title" id="editModalLabel">EDIT CART</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+
+												<div class="form-group">
+													<label for="productURL" class="form-control-label">PRODUCT
+														URL</label> <input type="text" class="form-control"
+														id="productURL" disabled="disabled" />
+												</div>
+												<input type="hidden" class="form-control" id="cartId" />
+												<div class="form-group">
+													<label for="price" class="form-control-label">PRICE</label>
+													<input type="text" class="form-control" id="price" />
+												</div>
+												<div class="form-group">
+													<label for="quantity" class="form-control-label">QUANTITY</label>
+													<input type="text" class="form-control" id="quantity" />
+												</div>
+												<div class="form-group">
+													<label class="alert alert-dismissible alert-danger"
+														id="showError"></label>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>
+												<input type="submit" class="btn btn-primary" value="Update" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						<div class="modal fade" id="deleteCart" tabindex="-1"
+							role="dialog" aria-labelledby="deleteCartTitle"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="deleteCartTitle">Delete Item</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<p class="alert alert-danger">Are you sure to delete this
+											item from your cart?
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">CLOSE</button>
+										<a href="" class="btn btn-danger" id="delThisCart">YES</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/loading.js}"></script>
+	<script th:src="@{/js/userCart.js}"></script>
+</body>
+</html>

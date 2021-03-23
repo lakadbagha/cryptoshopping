@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart Info</title>
+<link rel="stylesheet" th:href="@{/asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+<script th:src="@{/js/jquery.js}"></script>
+<script defer th:src="@{/js/all.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+<style type="text/css">
+body, html {
+	height: 100%;
+}
+</style>
+</head>
+
+<body>
+	<div id="load"></div>
+	<div id="contents">
+		<div th:replace="@{/webTemplate/header} :: header"></div>
+		<div class="container-fluid h-100">
+
+			<div class="jumbotron">
+				<div class="col-sm-6 mx-auto">
+					<div class="form-group">
+						<label for="userId" class="col-form-label">User ID</label> <input
+							class="form-control" type="text" th:value="${userInfo.userId}"
+							readonly="readonly" id="userId">
+					</div>
+					<div class="form-group">
+						<label for="email" class="col-form-label">Email</label> <input
+							class="form-control" type="text" th:value="${userInfo.email}"
+							readonly="readonly" id="email">
+					</div>
+					<form id="userDetails">
+						<div class="form-group">
+							<label for="password" class="col-form-label">Password</label>
+							<div class="input-group">
+								<input class="form-control" type="password" required="required"
+									value="" id="password">
+								<div class="input-group-append">
+									<input class="btn btn-secondary" type="button"
+										onclick="if (password.type == 'text') password.type = 'password';
+  else password.type = 'text';"
+										value="show">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-primary" value="UPDATE">
+						</div>
+					</form>
+					<div class="form-group">
+						<label for="modifyDate" class="text-muted">Last Modified
+							Date</label><strong> <label
+							th:text="${#dates.format(userInfo.modifyDate, 'dd-MM-yyyy hh:mm aa')}"></label></strong>
+					</div>
+					<div class="alert alert-dismissible alert-success"
+						id="successMessage">
+						<strong>Updated!</strong>.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$("#successMessage").hide();
+			$("#userDetails").submit(function(e) {
+				e.preventDefault();
+				var password = $("#password").val();
+				if (password == "" || password == undefined) {
+					alert("Please Write Password.");
+					return false;
+				} else if (password < 5) {
+					alert("Password length must be greater then 5.");
+					return false;
+				} else {
+					$.post("/user/updateUserInfo", {
+						password : password
+					}, function(response) {
+						if (response == "success") {
+							$("#successMessage").show();
+						} else {
+							alert(response);
+						}
+					})
+				}
+			});
+		});
+	</script>
+	<script th:src="@{/js/loading.js}"></script>
+</body>
+</html>

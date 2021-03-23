@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Address Info</title>
+<link rel="stylesheet" th:href="@{/asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+<script th:src="@{/js/jquery.js}"></script>
+<script defer th:src="@{/js/all.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+<style type="text/css">
+body, html {
+	height: 100%;
+}
+</style>
+</head>
+
+<body>
+	<div id="load"></div>
+	<div id="contents">
+		<div th:replace="@{/webTemplate/header} :: header"></div>
+		<div class="container-fluid h-100">
+			<div class="alert alert-dismissible alert-primary">
+				<strong>Bitcoin Value:</strong> <label th:text="${bitcoinValue}"
+					id="bitcoinValue">Bitcoin Rate</label> INR
+
+			</div>
+			<div class="jumbotron">
+				<div class="row">
+					<div class="col-sm-6" id="getAddressDetails">
+						<div class="card-body">
+							<th:block th:each="address : ${addresses}">
+								<div class="list-group">
+										<div class="d-flex w-100 justify-content-between">
+											<h5 class="mb-1">
+												<label class="fullName" th:text="${address.fullName}"></label> <small>
+												<a th:href="@{/user/getAddress/{addressId}(addressId=${address.addressId})}"
+														class="btn btn-outline-success btn-sm addressBtn">
+														<i class="fas fa-address-card"></i> USE THIS
+													</a>
+												<a th:href="@{/user/deleteAddress/{addressId}(addressId=${address.addressId})}"
+														class="btn btn-outline-danger btn-sm delBtn">
+														<i class="fas fa-trash-alt"></i> DELETE
+													</a></small>
+											</h5>
+										</div> <strong>ADDRESS:</strong> <small><label class="mb-1 addressLine1"
+										th:text="${address.addressLine1}"></label>, <label
+										class="mb-1 addressLine2" th:text="${address.addressLine2}"></label>,</small>
+										<small><label class="mb-1 city" th:text="${address.city}"></label>,</small>
+										<small><label class="mb-1 region" th:text="${address.region}"></label>,</small>
+										<small> <label class="mb-1 country"
+											th:text="${address.country}"></label></small><small>
+											<strong>LANDMARK/NEAR BY: </strong><label class="mb-1 landMark"
+											th:text="${address.landMark}"></label>
+									</small><small> <strong>PHONE NUMBER:</strong> <label
+											class="mb-1 phoneNumber" th:text="${address.phoneNumber}"></label></small>
+										<small> <strong>POSTAL CODE:</strong> <label
+											class="mb-1 zipCode" th:text="${address.zipCode}"></label></small>
+											<hr>
+									</div>
+							</th:block>
+						</div>
+					</div>
+					<div class="col-sm-6" id="addressForm">
+						<div class="card-body">
+							<form id="placeOrder">
+								<div class="form-group">
+									<label class="col-form-label" for="name">NAME</label> <input
+										class="form-control" placeholder="FULL NAME" id="name"
+										type="text">
+								</div>
+								<div class="form-group">
+									<label class="col-form-label" for="address1">ADDRESS
+										LINE 1</label> <input class="form-control" placeholder="ADDRESS"
+										id="address1" type="text">
+								</div>
+								<div class="form-group">
+									<label class="col-form-label" for="address2">ADDRESS
+										LINE 2</label> <input class="form-control" placeholder="ADDRESS"
+										id="address2" type="text">
+								</div>
+								<div class="form-group">
+									<label class="col-form-label" for="city">CITY</label> <input
+										class="form-control" placeholder="CITY" id="city" type="text">
+								</div>
+								<div class="form-group">
+									<label class="col-form-label" for="state">STATE</label> <select
+										name=slist id="state" class="form-control">
+										<option value="">Select State</option>
+										<option value="Andaman and Nicobar Islands">Andaman
+											and Nicobar Islands</option>
+										<option value="Andhra Pradesh">Andhra Pradesh</option>
+										<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+										<option value="Assam">Assam</option>
+										<option value="Bihar">Bihar</option>
+										<option value="Chandigarh">Chandigarh</option>
+										<option value="Chhattisgarh">Chhattisgarh</option>
+										<option value="Dadra and Nagar Haveli">Dadra and
+											Nagar Haveli</option>
+										<option value="Daman and Diu">Daman and Diu</option>
+										<option value="Delhi">Delhi</option>
+										<option value="Goa">Goa</option>
+										<option value="Gujarat">Gujarat</option>
+										<option value="Haryana">Haryana</option>
+										<option value="Himachal Pradesh">Himachal Pradesh</option>
+										<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+										<option value="Jharkhand">Jharkhand</option>
+										<option value="Karnataka">Karnataka</option>
+										<option value="Kerala">Kerala</option>
+										<option value="Lakshadweep">Lakshadweep</option>
+										<option value="Madhya Pradesh">Madhya Pradesh</option>
+										<option value="Maharashtra">Maharashtra</option>
+										<option value="Manipur">Manipur</option>
+										<option value="Meghalaya">Meghalaya</option>
+										<option value="Mizoram">Mizoram</option>
+										<option value="Nagaland">Nagaland</option>
+										<option value="Orissa">Orissa</option>
+										<option value="Pondicherry">Pondicherry</option>
+										<option value="Punjab">Punjab</option>
+										<option value="Rajasthan">Rajasthan</option>
+										<option value="Sikkim">Sikkim</option>
+										<option value="Tamil Nadu">Tamil Nadu</option>
+										<option value="Tripura">Tripura</option>
+										<option value="Uttaranchal">Uttaranchal</option>
+										<option value="Uttar Pradesh">Uttar Pradesh</option>
+										<option value="West Bengal">West Bengal</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label class="col-form-label" for="country">COUNTRY</label> <input
+										class="form-control" value="india" disabled="disabled"
+										id="country" type="text">
+								</div>
+								<div class="form-group">
+									<label class="col-form-label" for="pinCode">PIN CODE</label> <input
+										class="form-control" placeholder="POSTAL AREA CODE"
+										id="pinCode" type="text">
+								</div>
+								<div class="form-group">
+									<label class="col-form-label" for="landmark">LANDMARK</label> <input
+										class="form-control" placeholder="LANDMARK/NEAR BY"
+										id="landMark" type="text">
+								</div>
+								<div class="form-group">
+									<label class="col-form-label" for="phoneNumber">PHONE
+										NUMBER</label> <input class="form-control" placeholder="MOBILE NUMBER"
+										id="phoneNumber" type="text">
+								</div>
+								<div class="form-group">
+									<label for="orderNote">Note/Request Before Order.</label>
+									<textarea class="form-control" id="orderNote" rows="2"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="deliverNote">Note/Request while deliver.</label>
+									<textarea class="form-control" id="deliverNote" rows="2"></textarea>
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-success" value="Place Order">
+									<input type="reset" class="btn btn-secondary" value="Reset">
+								</div>
+							</form>
+							<a href="/user/dashboard" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/userAddress.js}"></script>
+	<script th:src="@{/js/loading.js}"></script>
+</body>
+</html>

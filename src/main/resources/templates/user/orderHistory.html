@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart Info</title>
+<link rel="stylesheet" th:href="@{/asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+<script th:src="@{/js/jquery.js}"></script>
+<script defer th:src="@{/js/all.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+<style type="text/css">
+body, html {
+	height: 100%;
+}
+</style>
+</head>
+
+<body>
+	<div id="load"></div>
+	<div id="contents">
+		<div th:replace="@{/webTemplate/header} :: header"></div>
+		<div class="container-fluid h-100">
+			<div class="alert alert-dismissible alert-primary">
+				<strong>Bitcoin Value:</strong> <label th:text="${bitcoinValue}"
+					id="bitcoinValue">Bitcoin Rate</label> INR
+
+			</div>
+			<div class="jumbotron">
+				<div class="row">
+					<div class="col-sm-10 mx-auto">
+
+						<th:block th:each="order : ${orders}">
+							<div class="card border-light mb-3">
+								<div class="card-header">
+									<i class="fas fa-shopping-cart fa-2x"></i> Invoice ID: #<label
+										th:text="${order.invoiceId}"></label>
+									<div class="float-right">
+										Total invoice paid: <label th:text="${order.receivedAmount}"></label>
+										<label th:thext="${order.cryptoCurrencyName}"></label>
+									</div>
+								</div>
+
+								<div class="card-body">
+									<th:block th:each="cart : ${order.userCarts}">
+
+										<h4 class="card-title">
+											<label th:text="${cart.productURL}"></label>
+										</h4>
+										<p class="card-text">
+											Order ID: <label th:text="${cart.orderId}"></label><br> Status: <label
+												th:text="${cart.status}"></label>
+											<br> Delivery Date: <label
+												th:text="${cart.deliveryDate}"></label><br>
+										</p>
+										<hr>
+
+									</th:block>
+								</div>
+							</div>
+						</th:block>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/loading.js}"></script>
+</body>
+</html>

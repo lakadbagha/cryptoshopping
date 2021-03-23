@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Message</title>
+<link rel="stylesheet" th:href="@{/asset/css/pulse.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+</head>
+
+<body class="bg-primary">
+	<div th:replace="@{/webTemplate/header} :: header"></div><br>
+	<div class="container">
+		<div class="row">
+			<article class="col-12">
+				<div class="example-block">
+					<div class="jumbotron jumbotron-fluid">
+						<div class="container">
+							<div th:replace="@{/webTemplate/success} :: success"></div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+	</div>
+</body>
+</html>
